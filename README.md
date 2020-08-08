@@ -1,2 +1,2 @@
-# CPlusPlus17_20
-Test code for C++17 and C++20
+# Embedded_CPlusPlus
+Test code for Embedded C++
