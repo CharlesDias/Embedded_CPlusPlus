@@ -36,7 +36,7 @@ mkdir ./Book_EPMC
 6. And run the downloaded image in the container and create a volume to the Book_EPMC folder:
 
 ```console
-docker run -ti -v $PWD/Book_EPMC:/home/Book_EPMC -w /home/Book_EPMC ubuntu:bionic
+docker run -it -v $PWD/Book_EPMC:/home/pi/Book_EPMC -w /home/pi/Book_EPMC ubuntu:bionic
 ```
 
 The output have to be something like this:
@@ -59,16 +59,16 @@ Linux e465469a6d72 5.13.0-48-generic #54~20.04.1-Ubuntu SMP Thu Jun 2 23:37:17 U
 
 ### Install cross-compilation on Docker Host PC
 
-1. Run the docker container.
+1. Inside the root Git repository, runs the docker container.
 ```console
-docker run -it -v $PWD:/mnt ubuntu:bionic
+docker run -it -v $PWD/Book_EPMC:/home/pi/Book_EPMC -w /home/pi/Book_EPMC ubuntu:bionic
 ```
 
 2. And install the packages.
 On docker run
 
 ```console
-apt update -y && apt install -y crossbuild-essential-armel cmake ssh
+apt update -y && apt install -y crossbuild-essential-armel cmake ssh gdb-multiarch
 ```
 
 3. Check if the compiler was installed.
@@ -148,4 +148,42 @@ run
 Exit
 ```console
 q
+```
+
+## Remote debugging
+
+1. Install gdb-multiarch on host
+
+```console
+sudo apt-get install gdb-multiarch
+```
+
+2. Install gdbserver on Raspberry Pi
+
+```console
+sudo apt-get install gdbserver
+```
+
+3. Inside the target run the hello application under gdbserver
+
+```console
+gdbserver 0.0.0.0:9090 ./hello
+```
+
+4. Inside the build system terminal acess the hello folder and run the command, passing the application binary as a parameter
+
+```console
+gdb-multiarch -q hello
+```
+
+5. Configure a remote connection by typing the following command in the GDB command line
+
+```console
+target remote X.X.X.X:9090
+```
+
+6. Type the continue command
+
+```console
+continue
 ```
