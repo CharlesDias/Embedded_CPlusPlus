@@ -1,5 +1,7 @@
 # Instructions to analyze the crash:
 
+**Note:** This README.md has instruction valid for all folder inside of chapter_05.
+
 1. Run the loop executable binary using gdb
 
 ```console
@@ -200,3 +202,43 @@ tail -n 20 /var/log/syslog
 ```
 
 Note: Boost.Log, at https://theboostcpplibraries.com/boost.log, and spdlog, at https://github.com/gabime/spdlog provide a more convenient C++ interface compared to the generic C interface of `syslog`.
+
+
+# Working with debug and release builds
+
+Debug symbols added by a compiler do not add runtime overhead. However, they increase the size of the resulting binary. Moreover, performance optimizations made by the compiler can make interactive debugging difficult.
+
+## Building the loop3 program in a Release and Debug mode
+
+1. Acess the folder loop3 and run the command below to build as Release.
+```console
+cmake -DCMAKE_BUILD_TYPE=Release . && make
+```
+2. Copy the loop binary to target and execute. The expected output is
+```console
+pi@raspberrypi:~/Book_EPMC/chapter_05/loop3 $ ./loop 
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Time limit exceeded
+Aborted
+```
+3. Check the size of binary file is 25952 bytes.
+
+4. Now, build as Debug.
+```console
+cmake -DCMAKE_BUILD_TYPE=Debug && make clean && make
+```
+
+5. Copy the loop binary to target and execute. The expected output is
+```console
+Delay: 0 ms, max: 10 ms
+Delay: 1 ms, max: 10 ms
+Delay: 3 ms, max: 10 ms
+Delay: 4 ms, max: 10 ms
+Delay: 6 ms, max: 10 ms
+Delay: 7 ms, max: 10 ms
+Delay: 9 ms, max: 10 ms
+Delay: 11 ms, max: 10 ms
+Execution time 11 ms exceeded 10 ms limitterminate called after throwing an instance of 'std::runtime_error'
+  what():  Time limit exceeded
+Aborted
+```

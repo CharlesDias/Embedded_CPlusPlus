@@ -140,12 +140,12 @@ Open the executable with GDB
 gdb ./hello
 ```
 
-Run the GDB
+2. Run the GDB
 ```console
 run
 ```
 
-Exit
+3. Exit
 ```console
 q
 ```
