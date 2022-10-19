@@ -36,7 +36,7 @@ mkdir ./Book_EPMC
 6. And run the downloaded image in the container and create a volume to the Book_EPMC folder:
 
 ```console
-docker run -it -v $PWD/Book_EPMC:/home/pi/Book_EPMC -w /home/pi/Book_EPMC ubuntu:bionic
+docker run -it -v $PWD/Book_EPMC:/home/pi/Book_EPMC charlesdias/ubuntu-book-epmc:latest
 ```
 
 The output have to be something like this:
@@ -57,27 +57,15 @@ The output expected is similar to:
 Linux e465469a6d72 5.13.0-48-generic #54~20.04.1-Ubuntu SMP Thu Jun 2 23:37:17 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux
 ```
 
-### Install cross-compilation on Docker Host PC
+### Check tools installed on Docker Host PC
 
-1. Inside the root Git repository, runs the docker container.
-```console
-docker run -it -v $PWD/Book_EPMC:/home/pi/Book_EPMC -w /home/pi/Book_EPMC ubuntu:bionic
-```
-
-2. And install the packages.
-On docker run
-
-```console
-apt update -y && apt install -y crossbuild-essential-armel cmake ssh gdb-multiarch
-```
-
-3. Check if the compiler was installed.
+1. Check if the compiler was installed.
 
 ```console
 arm-linux-gnueabi-g++ --version
 ```
 
-4. And the CMake version.
+2. And the CMake version.
 
 ```console
 cmake --version
@@ -186,4 +174,17 @@ target remote X.X.X.X:9090
 
 ```console
 continue
+```
+
+## Build the application with CMake
+
+1. Run CMake
+
+```console
+mkdir -p build && cd build && cmake ..
+```
+
+2. Build the application by running the following
+```console
+make
 ```
