@@ -21,19 +21,13 @@ sudo usermod -aG docker ${USER}
 
 3. Make the log out or restart the machine.
 
-4. To pull the Docker image, run this command below:
-
-```console
-docker pull ubuntu:bionic
-```
-
-5. Access the folder that you will use for this project and create a working directory. For example:
+4. Access the folder that you will use for this project and create a working directory. For example:
 
 ```console
 mkdir ./Book_EPMC
 ```
 
-6. And run the downloaded image in the container and create a volume to the Book_EPMC folder:
+5. And run the downloaded image in the container and create a volume to the Book_EPMC folder:
 
 ```console
 docker run -it -v $PWD/Book_EPMC:/home/pi/Book_EPMC charlesdias/ubuntu-book-epmc:latest
@@ -42,10 +36,10 @@ docker run -it -v $PWD/Book_EPMC:/home/pi/Book_EPMC charlesdias/ubuntu-book-epmc
 The output have to be something like this:
 
 ```console
-root@567702b8688b:/# 
+root@c0a68f751492:/home/pi/Book_EPMC# 
 ```
 
-7. Finaly, run the uname -a command to get information about the system:
+6. Finaly, run the uname -a command to get information about the system:
 
 ```console
 uname -a
@@ -54,7 +48,7 @@ uname -a
 The output expected is similar to:
 
 ```console
-Linux e465469a6d72 5.13.0-48-generic #54~20.04.1-Ubuntu SMP Thu Jun 2 23:37:17 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux
+Linux c0a68f751492 5.15.0-52-generic #58-Ubuntu SMP Thu Oct 13 08:03:55 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux
 ```
 
 ### Check tools installed on Docker Host PC
@@ -70,6 +64,21 @@ arm-linux-gnueabi-g++ --version
 ```console
 cmake --version
 ```
+
+### Build the application with CMake
+
+1. Access the project folder containing the CMakeLists.txt file and run CMake
+
+```console
+mkdir -p build && cd build && cmake ..
+```
+
+2. Build the application by running the following
+
+```console
+make
+```
+
 
 &nbsp;
 ## Working with emulators
@@ -174,17 +183,4 @@ target remote X.X.X.X:9090
 
 ```console
 continue
-```
-
-## Build the application with CMake
-
-1. Run CMake
-
-```console
-mkdir -p build && cd build && cmake ..
-```
-
-2. Build the application by running the following
-```console
-make
 ```
